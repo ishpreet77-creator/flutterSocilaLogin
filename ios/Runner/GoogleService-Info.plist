@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>112676747478-jo3pr17qgc01p04jn57ojk1pb02m0mdt.apps.googleusercontent.com</string>
+	<string>112676747478-j7o4560c50jsedeksadiv88g52lm3aip.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.112676747478-jo3pr17qgc01p04jn57ojk1pb02m0mdt</string>
+	<string>com.googleusercontent.apps.112676747478-j7o4560c50jsedeksadiv88g52lm3aip</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCBAG8s1Wl9PLJlamjS4Dz0coZfXCBJ_mQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.flutterCreatePod</string>
+	<string>com.example.flutterCreatePodd</string>
 	<key>PROJECT_ID</key>
 	<string>authflutter-1d5c8</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:112676747478:ios:534b422190dd320eac7177</string>
+	<string>1:112676747478:ios:1fec7828624d898eac7177</string>
 </dict>
 </plist>

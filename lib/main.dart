@@ -1,10 +1,23 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_create_pod/signin.dart';
+import 'package:provider/provider.dart';
+
+import 'authService.dart';
 
 void main() {
-  auth();
-  runApp(const MyApp());
+  auth(); // Initialize Firebase
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<socialLoginAuth>(
+          create: (_) => socialLoginAuth(),
+        ),
+        // Add more providers for other data models
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 void auth() async {
@@ -21,7 +34,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
