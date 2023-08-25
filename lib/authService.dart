@@ -18,37 +18,42 @@ class socialLoginAuth extends ChangeNotifier {
   signInWithGoogle(BuildContext context, navigateScreen) async {
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     final GoogleSignIn googleSignIn = GoogleSignIn();
+    GoogleSignInAccount? googleSignInAccount;
 
     try {
-      final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn().catchError((onError) => null);
+      googleSignInAccount = await googleSignIn.signIn().catchError((onError) => null);
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication? googleSignInAuthentication = await googleSignInAccount.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(idToken: googleSignInAuthentication?.idToken ?? "", accessToken: googleSignInAuthentication?.accessToken.toString() ?? "");
+        UserCredential result = await firebaseAuth.signInWithCredential(credential);
+        User? userdetails = result.user;
 
-      final GoogleSignInAuthentication? googleSignInAuthentication = await googleSignInAccount?.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(idToken: googleSignInAuthentication?.idToken ?? "", accessToken: googleSignInAuthentication?.accessToken != null ? googleSignInAuthentication?.accessToken.toString() : "");
-      UserCredential result = await firebaseAuth.signInWithCredential(credential);
-      User? userdetails = result.user;
+        if (userdetails != null) {
+          await savestring().savename("${userdetails.displayName ?? ""}");
 
-      if (userdetails != null) {
-        await savestring().savename("${userdetails.displayName ?? ""}");
+          print(userdetails);
 
-        print(userdetails);
-
-        Navigator.push(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(1.0, 0.0),
-                  end: Offset.zero,
-                ).animate(animation),
-                child: navigateScreen,
-              );
-            },
-            transitionDuration: Duration(milliseconds: 300),
-          ),
-        );
+          Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1.0, 0.0),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: navigateScreen,
+                );
+              },
+              transitionDuration: Duration(milliseconds: 300),
+            ),
+          );
+        } else {
+          print("Something wrong in result == $result");
+        }
       } else {
-        print("Something wrong in result == $result");
+        print("Something wrong in result ==  google sign problem");
+        return; 
       }
     } on PlatformException {
       return null;
@@ -122,10 +127,6 @@ class socialLoginAuth extends ChangeNotifier {
     } catch (error) {
       print("Apple Sign-In Error: $error");
     }
-  }
-
-  signInWithFaceBool(BuildContext context, navigateScreen) async {
-    
   }
 }
 // webAuthenticationOptions: WebAuthenticationOptions(
